@@ -43,7 +43,7 @@ export class BlockUIService {
   /**
   * Updates message for given BlockUI instance or instances
   */
-  update(target: string | string[], message: any): void {
+  update(target: string | string[], message?: any): void {
     this.dispatch(target, BlockUIActions.UPDATE, message);
   }
 

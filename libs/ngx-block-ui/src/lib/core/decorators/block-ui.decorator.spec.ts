@@ -14,7 +14,8 @@ describe('BlockUI decorator', () => {
     })
       .compileComponents();
 
-    spyOn(BlockUIServiceInstance, 'decorate').and.callFake(name => ({ name }));
+    // @ts-ignore
+    spyOn(BlockUIServiceInstance, 'decorate').and.callFake((name) => ({ name }));
   }));
 
   it('sets blockUI to instance of NgBlockUI', () => {

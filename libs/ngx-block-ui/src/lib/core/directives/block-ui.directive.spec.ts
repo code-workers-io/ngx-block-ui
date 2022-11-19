@@ -92,6 +92,6 @@ describe(`block-ui element directive`, () => {
     cf.detectChanges();
 
     const template = cf.debugElement.query(By.css('.test-template'));
-    expect(template).not.toBe(null);
+    expect(template).not.toBeNull();
   });
 });

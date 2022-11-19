@@ -1,4 +1,4 @@
-import { } from 'jasmine';
+
 import { ComponentFixture, TestBed, fakeAsync, flush, tick, async } from '@angular/core/testing';
 import { NgModule, Component, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
@@ -11,6 +11,7 @@ import {NgxBlockUiModule} from "../../../ngx-block-ui.module";
 describe('block-ui-content component', () => {
   describe('block-ui-content component no template:', () => {
     @Component({
+      // eslint-disable-next-line @angular-eslint/component-selector
       selector: 'test-comp',
       template: `
         <block-ui-content
@@ -22,9 +23,10 @@ describe('block-ui-content component', () => {
         </block-ui-content>
       `
     })
+      // eslint-disable-next-line @angular-eslint/component-class-suffix
     class TestComp {
       @BlockUI('content-test') blockUI: any;
-      defaultMessage: string;
+      defaultMessage: string | undefined;
       delayStart = 0;
       delayStop = 0;
     }
@@ -167,14 +169,19 @@ describe('block-ui-content component', () => {
 
   describe('block-ui-content custom Component template', () => {
     @Component({
+      // eslint-disable-next-line @angular-eslint/component-selector
       selector: 'template-comp',
       template: `
         <div class="test-template">{{message}}</div>
       `
     })
-    class TestTemplateComp { }
+      // eslint-disable-next-line @angular-eslint/component-class-suffix
+    class TestTemplateComp {
+      message: string | undefined;
+    }
 
     @Component({
+      // eslint-disable-next-line @angular-eslint/component-selector
       selector: 'test-comp',
       template: `
         <block-ui-content
@@ -186,14 +193,15 @@ describe('block-ui-content component', () => {
         ></block-ui-content>
       `
     })
+      // eslint-disable-next-line @angular-eslint/component-class-suffix
     class TestComp {
       @BlockUI('content-test') blockUI: any;
-      defaultMessage: string;
+      defaultMessage: string | undefined;
       template = TestTemplateComp;
     }
 
     @NgModule({
-      imports: [BlockUIModule.forRoot()],
+      imports: [NgxBlockUiModule.forRoot()],
       declarations: [
         TestTemplateComp,
         TestComp
@@ -209,7 +217,7 @@ describe('block-ui-content component', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [
-          BlockUIModule.forRoot(),
+          NgxBlockUiModule.forRoot(),
           TestModule
         ]
       })
@@ -225,9 +233,7 @@ describe('block-ui-content component', () => {
     });
 
     it('appends template to blockUIContent', fakeAsync(() => {
-      let template;
-
-      template = cf.debugElement.query(By.css('.test-template'));
+      const template = cf.debugElement.query(By.css('.test-template'));
       expect(template).toBeDefined();
     }));
 
@@ -237,7 +243,7 @@ describe('block-ui-content component', () => {
       cf.detectChanges();
 
       const spinner = cf.debugElement.query(By.css('.block-ui-spinner'));
-      expect(spinner).toBe(null);
+      expect(spinner).toBeNull();
     }));
 
     it('displays messages passed to blockUI.start()', fakeAsync(() => {
@@ -270,6 +276,7 @@ describe('block-ui-content component', () => {
 
   describe('block-ui-content custom TemplateRef template', () => {
     @Component({
+      // eslint-disable-next-line @angular-eslint/component-selector
       selector: 'test-comp',
       template: `
         <ng-template class="ref-template" #templateTest>
@@ -284,14 +291,15 @@ describe('block-ui-content component', () => {
         ></block-ui-content>
       `
     })
+      // eslint-disable-next-line @angular-eslint/component-class-suffix
     class TestComp {
       @BlockUI('content-test') blockUI: any;
-      defaultMessage: string;
-      templateTest;
+      defaultMessage: string | undefined;
+      //templateTest;
     }
 
     @NgModule({
-      imports: [BlockUIModule.forRoot()],
+      imports: [NgxBlockUiModule.forRoot()],
       declarations: [TestComp]
     })
     class TestModule { }
@@ -303,7 +311,7 @@ describe('block-ui-content component', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [
-          BlockUIModule.forRoot(),
+          NgxBlockUiModule.forRoot(),
           TestModule
         ]
       })
@@ -318,9 +326,7 @@ describe('block-ui-content component', () => {
     });
 
     it('appends template to blockUIContent', fakeAsync(() => {
-      let template;
-
-      template = cf.debugElement.query(By.css('.test-template'));
+      const template = cf.debugElement.query(By.css('.test-template'));
       expect(template).toBeDefined();
     }));
 
@@ -330,12 +336,13 @@ describe('block-ui-content component', () => {
       cf.detectChanges();
 
       const spinner = cf.debugElement.query(By.css('.block-ui-spinner'));
-      expect(spinner).toBe(null);
+      expect(spinner).toBeNull();
     }));
   });
 
   describe('block-ui-content module settings', () => {
     @Component({
+      // eslint-disable-next-line @angular-eslint/component-selector
       selector: 'test-comp',
       template: `
         <block-ui-content
@@ -347,9 +354,10 @@ describe('block-ui-content component', () => {
         </block-ui-content>
       `
     })
+      // eslint-disable-next-line @angular-eslint/component-class-suffix
     class TestComp {
       @BlockUI('content-test') blockUI: any;
-      defaultMessage: string;
+      defaultMessage: string | undefined;
     }
 
     let cf: ComponentFixture<any>;
@@ -360,7 +368,7 @@ describe('block-ui-content component', () => {
     beforeEach(async(() => {
       TestBed.configureTestingModule({
         imports: [
-          BlockUIModule.forRoot({
+          NgxBlockUiModule.forRoot({
             message: globalMessage
           })
         ],
@@ -416,6 +424,7 @@ describe('block-ui-content component', () => {
 
   describe('block-ui-content delays', () => {
     @Component({
+      // eslint-disable-next-line @angular-eslint/component-selector
       selector: 'test-comp',
       template: `
         <block-ui-content
@@ -427,9 +436,10 @@ describe('block-ui-content component', () => {
         </block-ui-content>
       `
     })
+      // eslint-disable-next-line @angular-eslint/component-class-suffix
     class TestComp {
       @BlockUI('content-test') blockUI: any;
-      defaultMessage: string;
+      defaultMessage: string | undefined;
       delayStart = 500;
       delayStop = 500;
     }
@@ -440,7 +450,7 @@ describe('block-ui-content component', () => {
 
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [BlockUIModule.forRoot()],
+        imports: [NgxBlockUiModule.forRoot()],
         declarations: [TestComp]
       })
         .compileComponents();
@@ -559,6 +569,7 @@ describe('block-ui-content component', () => {
 
   describe('reset & resetGlobal', () => {
     @Component({
+      // eslint-disable-next-line @angular-eslint/component-selector
       selector: 'test-comp',
       template: `
         <block-ui-content [name]="'block-1'" [delayStart]="0" [delayStop]="0">
@@ -567,10 +578,11 @@ describe('block-ui-content component', () => {
         </block-ui-content>
       `
     })
+      // eslint-disable-next-line @angular-eslint/component-class-suffix
     class TestComp {
       @BlockUI('block-1') blockUIOne: any;
       @BlockUI('block-2') blockUITwo: any;
-      defaultMessage: string;
+      defaultMessage: string | undefined;
     }
 
     let cf: ComponentFixture<any>;
@@ -578,7 +590,7 @@ describe('block-ui-content component', () => {
 
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [BlockUIModule.forRoot()],
+        imports: [NgxBlockUiModule.forRoot()],
         declarations: [TestComp]
       })
         .compileComponents();

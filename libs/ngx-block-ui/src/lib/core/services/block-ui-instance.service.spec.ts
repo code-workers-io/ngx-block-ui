@@ -10,23 +10,23 @@ describe('BlockUIInstance service', () => {
   beforeEach(() => {
     blockUIService = new BlockUIInstanceService();
 
-    spyOn(blockUIService, 'dispatch');
+    spyOn(blockUIService as any, 'dispatch');
   });
 
   describe('decorate', () => {
     it('returns NgBlockUI instance', () => {
       const blockUI = blockUIService.decorate();
 
-      expect(blockUIService.dispatch).toHaveBeenCalledWith(
-        blockUIService.blockUISubject, BlockUIActions.START, BLOCKUI_DEFAULT
+      expect((blockUIService as any).dispatch).toHaveBeenCalledWith(
+        (blockUIService as any).blockUISubject, BlockUIActions.START, BLOCKUI_DEFAULT
       );
 
-      expect(blockUIService.dispatch).toHaveBeenCalledWith(
-        blockUIService.blockUISubject, BlockUIActions.STOP, BLOCKUI_DEFAULT
+      expect((blockUIService as any).dispatch).toHaveBeenCalledWith(
+        (blockUIService as any).blockUISubject, BlockUIActions.STOP, BLOCKUI_DEFAULT
       );
 
-      expect(blockUIService.dispatch).toHaveBeenCalledWith(
-        blockUIService.blockUISubject, BlockUIActions.RESET, BLOCKUI_DEFAULT
+      expect((blockUIService as any).dispatch).toHaveBeenCalledWith(
+        (blockUIService as any).blockUISubject, BlockUIActions.RESET, BLOCKUI_DEFAULT
       );
     });
 
@@ -34,8 +34,8 @@ describe('BlockUIInstance service', () => {
       const expectName = 'test';
       const blockUI = blockUIService.decorate(expectName);
 
-      expect(blockUIService.dispatch).toHaveBeenCalledWith(
-        blockUIService.blockUISubject, BlockUIActions.START, expectName
+      expect((blockUIService as any).dispatch).toHaveBeenCalledWith(
+        (blockUIService as any).blockUISubject, BlockUIActions.START, expectName
       );
     });
   });
@@ -44,20 +44,20 @@ describe('BlockUIInstance service', () => {
     it('returns a blockUI observable', () => {
       const blockUIObservable = blockUIService.observe();
 
-      expect(blockUIObservable).toEqual(blockUIService.blockUIObservable);
+      expect(blockUIObservable).toEqual(blockUIService.blockUIObservable$);
     });
 
     it('observable subscribes to blockUISubject', done => {
       const blockUIObservable = blockUIService.observe();
       const expectedResult = 'test';
 
-      blockUIService.blockUIObservable.pipe(map((data) => {
+      blockUIService.blockUIObservable$.pipe(map((data) => {
         expect(data).toEqual(expectedResult);
         done();
       }))
         .subscribe();
 
-      blockUIService.blockUISubject.next(expectedResult);
+      (blockUIService as any).blockUISubject.next(expectedResult);
     });
   });
 
@@ -71,29 +71,29 @@ describe('BlockUIInstance service', () => {
     beforeEach(() => {
       blockUIService = new BlockUIInstanceService();
 
-      spyOn(blockUIService.blockUISubject, 'next');
+      spyOn((blockUIService as any).blockUISubject, 'next');
     });
 
     it('invokes blockUISubject next method', () => {
-      const dispatcher = blockUIService.dispatch(
-        blockUIService.blockUISubject, BlockUIActions.START
+      const dispatcher = (blockUIService as any).dispatch(
+        (blockUIService as any).blockUISubject, BlockUIActions.START
       );
 
       dispatcher();
 
-      expect(blockUIService.blockUISubject.next).toHaveBeenCalledWith(expectedData);
+      expect((blockUIService as any).blockUISubject.next).toHaveBeenCalledWith(expectedData);
     });
 
     it('passes message to dispatched data', () => {
       const message = 'Loading...';
 
-      const dispatcher = blockUIService.dispatch(
-        blockUIService.blockUISubject, BlockUIActions.START
+      const dispatcher = (blockUIService as any).dispatch(
+        (blockUIService as any).blockUISubject, BlockUIActions.START
       );
 
       dispatcher(message);
 
-      expect(blockUIService.blockUISubject.next).toHaveBeenCalledWith(
+      expect((blockUIService as any).blockUISubject.next).toHaveBeenCalledWith(
         { ...expectedData, message }
       );
     });

@@ -23,7 +23,7 @@ describe('BlockUI service', () => {
 
     it('methods dispatch corresponding actions', () => {
       blockUIService.start(instance);
-      blockUIService.update(instance, 'testMessage');
+      blockUIService.update(instance);
       blockUIService.stop(instance);
       blockUIService.unsubscribe(instance);
 

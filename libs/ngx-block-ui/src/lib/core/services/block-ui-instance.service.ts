@@ -12,10 +12,10 @@ export class BlockUIInstanceService {
   blockUISettings: BlockUISettings | any = {};
   blockUIInstances: any = {};
   private blockUISubject: ReplaySubject<any> = new ReplaySubject(1);
-  private blockUIObservable: Observable<any> = this.blockUISubject.asObservable();
+  blockUIObservable$: Observable<any> = this.blockUISubject.asObservable();
 
   constructor() {
-    this.blockUIObservable.subscribe(this.blockUIMiddleware.bind(this));
+    this.blockUIObservable$.subscribe(this.blockUIMiddleware.bind(this));
   }
 
   getSettings(): BlockUISettings | any {
@@ -45,7 +45,7 @@ export class BlockUIInstanceService {
   }
 
   observe(): Observable<any> {
-    return this.blockUIObservable;
+    return this.blockUIObservable$;
   }
 
   clearInstance(instanceName: string) {
