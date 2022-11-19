@@ -1,1 +1,27 @@
 /* You can add global styles to this file, and also import other style files */
+html,
+body {
+  background: #32424e;
+  font-family: sans-serif;
+  text-align: center;
+}
+
+h1 {
+  color: #dae2ea;
+}
+
+.button {
+  padding: 10px 20px;
+  margin: 0 5px;
+  border: none;
+  cursor: pointer;
+}
+
+.button--default {
+  background: #ff6675;
+  color: #fff;
+}
+
+.controls {
+  margin-bottom: 10px
+}
