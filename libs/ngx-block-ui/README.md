@@ -344,6 +344,9 @@ Instead of declaring separate instances with the `@BlockUI()` decorator you can 
 | `resetGlobal` | <code>N/A</code>                                           | Resets blocking app wide for all instances.                                              |
 | `unsubscribe` | <code>target: string &#124; string[]</code>                | Unsubscribes a single instance or multiple instances by passing instance name(s).        |
 
+## Version Compatibility
+- v.1.1.0 - Angular >14.2.0
+
 ## Other Modules
 
 ### [Http Module](./http/README.md) - Automatically block during http requests
