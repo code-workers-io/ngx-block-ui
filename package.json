@@ -7,7 +7,10 @@
     "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2020 browser module main",
     "start": "nx serve",
     "build": "nx build",
-    "test": "nx test"
+    "test": "nx test",
+    "release:major": "changelog -M && git add *.md && git commit -m 'updated CHANGELOG.md' && npm version major && git push origin master && git push origin --tags",
+    "release:minor": "changelog -m && git add *.md && git commit -m 'updated CHANGELOG.md' && npm version minor && git push origin master && git push origin --tags",
+    "release:patch": "changelog -p && git add *.md && git commit -m 'updated CHANGELOG.md' && npm version patch && git push origin master && git push origin --tags"
   },
   "private": true,
   "dependencies": {
@@ -48,6 +51,7 @@
     "eslint": "~8.15.0",
     "eslint-config-prettier": "8.1.0",
     "eslint-plugin-cypress": "^2.10.3",
+    "generate-changelog": "^1.8.0",
     "jasmine-core": "~4.2.0",
     "jasmine-spec-reporter": "~7.0.0",
     "jest": "28.1.1",
