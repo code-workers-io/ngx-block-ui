@@ -1,6 +1,6 @@
 {
   "name": "@code-workers.io/ngx-block-ui",
-  "version": "14.0.0",
+  "version": "1.1.0",
   "peerDependencies": {
     "@angular/common": "^14.2.0",
     "@angular/core": "^14.2.0"
