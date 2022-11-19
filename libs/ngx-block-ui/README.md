@@ -8,10 +8,10 @@
 
 A Block UI implementation for Angular
 
-[![npm](https://img.shields.io/npm/v/ng-block-ui.svg)](https://www.npmjs.com/package/ng-block-ui)
-[![npm](https://img.shields.io/npm/v/ng-block-ui/next)](https://www.npmjs.com/package/ng-block-ui/v/next)
-[![npm](https://img.shields.io/npm/dm/ng-block-ui.svg)](https://www.npmjs.com/package/ng-block-ui)
-[![Build Status](https://travis-ci.org/kuuurt13/ng-block-ui.svg?branch=master)](https://travis-ci.org/kuuurt13/ng-block-ui)
+[![npm](https://img.shields.io/npm/v/ng-block-ui.svg)](https://www.npmjs.com/package/@code-workers.io/ngx-block-ui)
+[![npm](https://img.shields.io/npm/v/ng-block-ui/next)](https://www.npmjs.com/package/@code-workers.io/ngx-block-ui/v/next)
+[![npm](https://img.shields.io/npm/dm/ng-block-ui.svg)](https://www.npmjs.com/package/@code-workers.io/ngx-block-ui)
+
 
 ## Installation
 
