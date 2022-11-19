@@ -1,0 +1,47 @@
+{
+  "name": "ngx-block-ui",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/ngx-block-ui/src",
+  "prefix": "ngx-block-ui2",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:package",
+      "outputs": ["dist/libs/ngx-block-ui"],
+      "options": {
+        "project": "libs/ngx-block-ui/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/ngx-block-ui/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/ngx-block-ui/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@angular-devkit/build-angular:karma",
+      "options": {
+        "main": "libs/ngx-block-ui/src/test.ts",
+        "tsConfig": "libs/ngx-block-ui/tsconfig.spec.json",
+        "karmaConfig": "libs/ngx-block-ui/karma.conf.js"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/ngx-block-ui/**/*.ts",
+          "libs/ngx-block-ui/**/*.html",
+          "libs/ngx-block-ui/http/**/*.ts",
+          "libs/ngx-block-ui/http/**/*.html",
+          "libs/ngx-block-ui/router/**/*.ts",
+          "libs/ngx-block-ui/router/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": []
+}

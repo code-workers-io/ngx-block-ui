@@ -1,0 +1,117 @@
+import {
+  Directive,
+  Input,
+  OnInit,
+  OnDestroy,
+  ComponentRef,
+  ComponentFactoryResolver,
+  ViewContainerRef,
+  TemplateRef,
+  Renderer2,
+  EmbeddedViewRef
+} from '@angular/core';
+import { BlockUIContentComponent } from '../components/block-ui-content/block-ui-content.component';
+import { BlockUIInstanceService } from '../services/block-ui-instance.service';
+import { BLOCKUI_DEFAULT } from '../constants/block-ui-default-name.constant';
+import { BlockUIService } from '../services/block-ui.service';
+
+@Directive({ selector: '[blockUI]' })
+export class BlockUIDirective implements OnInit, OnDestroy {
+  private blockUIComponentRef: ComponentRef<BlockUIContentComponent> | undefined;
+  blockTarget!: string;
+  message: any;
+  template: any;
+  delayStart: any;
+  delayStop: any;
+
+  @Input()
+  set blockUI(name: any) { this.blockTarget = name; }
+  @Input()
+  set blockUIMessage(message: any) { this.message = message; }
+  @Input()
+  set blockUITemplate(template: any) { this.template = template; }
+  @Input()
+  set blockUIDelayStart(delayStart: any) {
+    this.delayStart = delayStart ? Number(delayStart) : null;
+  }
+  @Input()
+  set blockUIDelayStop(delayStop: any) {
+    this.delayStop = delayStop ? Number(delayStop) : null;
+  }
+
+  constructor(
+    private blockUIService: BlockUIService,
+    private blockUIInstanceService: BlockUIInstanceService,
+    private viewRef: ViewContainerRef,
+    private templateRef: TemplateRef<any>,
+    private renderer: Renderer2,
+    private componentFactoryResolver: ComponentFactoryResolver
+  ) { }
+
+  ngOnInit() {
+    try {
+      this.viewRef.createEmbeddedView(this.templateRef);
+      const parentElement = this.getParentElement();
+
+      if (parentElement && !this.isComponentInTemplate(parentElement)) {
+        this.renderer.addClass(parentElement, 'block-ui__element');
+        this.blockUIComponentRef = this.createComponent();
+        const blockUIContent = this.findContentNode(this.viewRef.element.nativeElement);
+
+        if (blockUIContent) {
+          const settings = this.blockUIInstanceService.getSettings();
+
+          parentElement.appendChild(blockUIContent);
+          this.blockUIComponentRef.instance.className = 'block-ui-wrapper--element';
+          this.blockUIComponentRef.instance.name = this.blockTarget || BLOCKUI_DEFAULT;
+          if (this.message) this.blockUIComponentRef.instance.defaultMessage = this.message;
+          if (this.delayStart) this.blockUIComponentRef.instance.delayStart = this.delayStart;
+          if (this.delayStop) this.blockUIComponentRef.instance.delayStop = this.delayStop;
+          if (this.template || settings.template)
+            this.blockUIComponentRef.instance.templateCmp = this.template || settings.template;
+        }
+      }
+    } catch (error) {
+      console.error('ng-block-ui:', error);
+    }
+  }
+
+  private isComponentInTemplate(element: any): boolean {
+    // Needed because of https://github.com/microsoft/TypeScript/issues/26235
+    const targetElement = element || {};
+    let { children } = targetElement;
+    children = Array.from(children || []).reverse();
+    return children.some((el: any) => el && el.localName === 'block-ui');
+  }
+
+  private getParentElement(): Element {
+    const embeddedView = this.viewRef.get(0) as EmbeddedViewRef<any>;
+
+    return embeddedView.rootNodes[0];
+
+  }
+
+  // Needed for IE (#17)
+  private findContentNode(element: any) {
+    const nextSibling = element.nextSibling || {};
+    const previousSibling = element.previousSibling || {};
+
+    return [
+      nextSibling,
+      nextSibling.nextSibling,
+      previousSibling,
+      previousSibling.previousSibling
+    ].find((e) => e && e.localName === 'block-ui-content');
+  }
+
+  private createComponent() {
+    const resolvedBlockUIComponent = this.componentFactoryResolver.resolveComponentFactory(BlockUIContentComponent);
+    return this.viewRef.createComponent(resolvedBlockUIComponent);
+  }
+
+  ngOnDestroy() {
+    if (this.blockTarget) {
+      this.blockUIService.reset(this.blockTarget);
+    }
+  }
+}

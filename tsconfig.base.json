@@ -14,7 +14,15 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@code-workers.io/ngx-block-ui": ["libs/ngx-block-ui/src/index.ts"],
+      "@code-workers.io/ngx-block-ui/http": [
+        "libs/ngx-block-ui/http/src/index.ts"
+      ],
+      "@code-workers.io/ngx-block-ui/router": [
+        "libs/ngx-block-ui/router/src/index.ts"
+      ]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
