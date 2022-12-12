@@ -345,7 +345,7 @@ Instead of declaring separate instances with the `@BlockUI()` decorator you can 
 | `unsubscribe` | <code>target: string &#124; string[]</code>                | Unsubscribes a single instance or multiple instances by passing instance name(s).        |
 
 ## Version Compatibility
-- v.1.1.2 - Angular >14.0.0
+- v.1.1.3 - Angular >14.2.0
 
 ## Other Modules
 
